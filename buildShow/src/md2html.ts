@@ -27,7 +27,7 @@ export async function resolveMd(name: string) {
         const imageName = `${name}_` + path.basename(href)
         writeFileSync(path.resolve(targetImageDir, imageName), image)
 
-        const newSrc = pathPosix.join('/MD/images', imageName)
+        const newSrc = pathPosix.join('/components-show/MD/images', imageName)
 
         return `<img src="${newSrc}" alt="${text}" title="${title || ''}" />`
       }

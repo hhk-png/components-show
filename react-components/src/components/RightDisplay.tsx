@@ -36,7 +36,7 @@ const RightDisplay: React.FC<RightDisplayProps> = ({
   const loadSourceCode = async (framework: string) => {
     if (selectedComponent) {
       try {
-        const response = await fetch(`/${framework}/${selectedComponent}.json`)
+        const response = await fetch(import.meta.env.VITE_API_BASE_URL + `/${framework}/${selectedComponent}.json`)
         const data = await response.json()
         setComponentData(data)
       } catch (error) {
@@ -55,7 +55,7 @@ const RightDisplay: React.FC<RightDisplayProps> = ({
   // blog
   const [blogHtml, setBlogHtml] = useState<string>('')
   const showBlog = () => {
-    fetch(`/MD/${selectedComponent}.html`)
+    fetch(import.meta.env.VITE_API_BASE_URL + `/MD/${selectedComponent}.html`)
       .then((res) => res.text())
       .then(setBlogHtml)
   }

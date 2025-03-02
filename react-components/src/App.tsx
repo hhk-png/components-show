@@ -7,7 +7,7 @@ function App() {
   const [componentsList, setComponentsList] = useState<string[]>([])
   useEffect(() => {
     async function fetchList() {
-      const list = await fetch('/componentsList.json').then(res => res.json())
+      const list = await fetch(import.meta.env.VITE_API_BASE_URL + '/componentsList.json').then(res => res.json())
       setComponentsList(list)
       setSelectedComponent(list[0])
     }
