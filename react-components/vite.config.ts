@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
 import { resolve } from 'node:path'
+import postCssPxToRem from 'postcss-pxtorem'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -9,6 +10,18 @@ export default defineConfig(({ mode }) => {
 
   return {
     base: '/components-show',
+    css: {
+      postcss: {
+        plugins: [
+          postCssPxToRem({
+            rootValue: 16 * 0.90,
+            propList: ['*'],
+            unitPrecision: 2,
+            exclude: /node_modules/gi,
+          }),
+        ],
+      },
+    },
     build: {
       rollupOptions: {
         input: {

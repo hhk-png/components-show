@@ -14,7 +14,7 @@ function App() {
     fetchList()
   }, [])
 
-  const [selectedComponent, setSelectedComponent] = useState(componentsList[0])
+  const [selectedComponent, setSelectedComponent] = useState<string>(componentsList[0])
   if (selectedComponent === '') {
     throw new Error('Please select a component')
   }
@@ -28,6 +28,7 @@ function App() {
       <LeftMenu
         className="basis-60 overflow-y-auto h-[100vh]"
         components={componentsList}
+        selectedComponent={selectedComponent}
         onSelectComponent={handleSelectComponent}
       ></LeftMenu>
       <div className="h-[100vh] grow overflow-y-auto">
