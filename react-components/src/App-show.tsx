@@ -1,9 +1,10 @@
-import Button from "./components-show/Button"
+import VitualList from "./components-show/VitualList"
+
 function App() {
 
   return (
     <div className="flex">
-      <Button></Button>
+      <VitualList></VitualList>
     </div>
   )
 }
