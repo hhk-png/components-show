@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import Button from './components-show/Button'
+// import VirtualList from './components-show/VirtualList'
+
 </script>
 
 <template>
-  <Button></Button>
+  abc
+  <!-- <VirtualList></VirtualList> -->
 </template>
 
 <style scoped>
