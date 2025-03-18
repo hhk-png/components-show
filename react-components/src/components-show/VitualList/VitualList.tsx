@@ -1,6 +1,6 @@
 import React from 'react'
-import DynamicSizeList, {type DynamicRow} from './DynamicSizeList'
-import FixedSizeList, { type FixedRow} from './FixedSizeList'
+import DynamicSizeList, { type DynamicRow } from './DynamicSizeList'
+import FixedSizeList, { type FixedRow } from './FixedSizeList'
 
 const heightCache: Record<number, number> = {}
 const Row: React.FC<DynamicRow> = ({ index }) => {
@@ -23,10 +23,7 @@ const Row: React.FC<DynamicRow> = ({ index }) => {
   )
 }
 
-const FixedRow: React.FC<FixedRow> = ({
-  index,
-  style,
-}) => {
+const FixedRow: React.FC<FixedRow> = ({ index, style }) => {
   const backgroundColorClass = index % 2 === 0 ? 'bg-blue-100' : 'bg-white'
 
   return (
@@ -41,7 +38,7 @@ const FixedRow: React.FC<FixedRow> = ({
 
 const VirtualList: React.FC = () => {
   return (
-    <div className='flex w-[100vw] justify-around'>
+    <div className='flex w-full justify-around'>
       <DynamicSizeList height={300} width={300} itemCount={1000}>
         {Row}
       </DynamicSizeList>

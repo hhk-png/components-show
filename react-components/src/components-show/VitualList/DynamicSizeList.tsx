@@ -63,18 +63,58 @@ const getItemLayoutdata = (
   return measuredDataMap[index]
 }
 
+const binarySearch = (
+  props: DynamicSizeListProps,
+  low: number,
+  high: number,
+  target: number
+) => {
+  while (low <= high) {
+    const mid = low + Math.floor((high - low) / 2)
+    const currentOffset = getItemLayoutdata(props, mid).offset
+
+    if (currentOffset === target) {
+      return mid
+    } else if (currentOffset < target) {
+      low = mid + 1
+    } else {
+      high = mid - 1
+    }
+  }
+
+  return Math.max(low - 1)
+}
+
+const expSearch = (
+  props: DynamicSizeListProps,
+  index: number,
+  target: number
+) => {
+  const { itemCount } = props
+  let exp = 1
+
+  while (index < itemCount && getItemLayoutdata(props, index).offset < target) {
+    index += exp
+    exp *= 2
+  }
+
+  return binarySearch(
+    props,
+    Math.floor(index / 2),
+    Math.min(index, itemCount - 1),
+    target
+  )
+}
+
 const getStartIndex = (props: DynamicSizeListProps, scrollOffset: number) => {
   if (scrollOffset === 0) {
     return 0
   }
-  const { itemCount } = props
-  for (let i = 0; i < itemCount; i++) {
-    const item = getItemLayoutdata(props, i)
-    if (item.offset >= scrollOffset) {
-      return i
-    }
+
+  if (measuredDataMap[lastMeasuredItemIndex].offset >= scrollOffset) {
+    return binarySearch(props, 0, lastMeasuredItemIndex, scrollOffset)
   }
-  return itemCount
+  return expSearch(props, Math.max(0, lastMeasuredItemIndex), scrollOffset)
 }
 
 const getEndIndex = (

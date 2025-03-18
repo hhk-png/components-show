@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import type { CSSProperties } from 'react'
 
 export interface FixedRow {
@@ -17,6 +17,9 @@ export interface FixedSizeList {
 const FixedSizeList: React.FC<FixedSizeList> = (props) => {
   const { height, width, itemCount, itemSize, children: Child } = props
   const [scrollOffset, setScrollOffset] = useState<number>(0)
+
+  const cacheRef = useRef<Map<number, React.ReactNode>>(new Map())
+
   const containerStyle: CSSProperties = {
     position: 'relative',
     width,
@@ -35,14 +38,21 @@ const FixedSizeList: React.FC<FixedSizeList> = (props) => {
     const numVisible = Math.ceil(height / itemSize)
     const endIndex = Math.min(itemCount, startIndex + numVisible + 2)
     const items = []
+
     for (let i = finalStartIndex; i < endIndex; i++) {
-      const itemStyle: React.CSSProperties = {
-        position: 'absolute',
-        height: itemSize,
-        width: '100%',
-        top: itemSize * i,
+      if (cacheRef.current.has(i)) {
+        items.push(cacheRef.current.get(i))
+      } else {
+        const itemStyle: React.CSSProperties = {
+          position: 'absolute',
+          height: itemSize,
+          width: '100%',
+          top: itemSize * i,
+        }
+        const item = <Child key={i} index={i} style={itemStyle}></Child>
+        cacheRef.current.set(i, item)
+        items.push(item)
       }
-      items.push(<Child key={i} index={i} style={itemStyle}></Child>)
     }
     return items
   }
@@ -54,9 +64,7 @@ const FixedSizeList: React.FC<FixedSizeList> = (props) => {
 
   return (
     <div style={containerStyle} onScroll={scrollHandle}>
-      <div style={contentStyle}>
-        { getCurrentChildren() }
-      </div>
+      <div style={contentStyle}>{getCurrentChildren()}</div>
     </div>
   )
 }
