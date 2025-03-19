@@ -1,11 +1,10 @@
 <script setup lang="ts">
-// import VirtualList from './components-show/VirtualList'
+import VirtualList from './components-show/VirtualList'
 
 </script>
 
 <template>
-  abc
-  <!-- <VirtualList></VirtualList> -->
+  <VirtualList></VirtualList>
 </template>
 
 <style scoped>

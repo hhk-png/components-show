@@ -14,7 +14,7 @@ export interface FixedSizeList {
   children: React.ComponentType<FixedRow>
 }
 
-const FixedSizeList: React.FC<FixedSizeList> = (props) => {
+export const FixedSizeList: React.FC<FixedSizeList> = (props) => {
   const { height, width, itemCount, itemSize, children: Child } = props
   const [scrollOffset, setScrollOffset] = useState<number>(0)
 
@@ -68,5 +68,3 @@ const FixedSizeList: React.FC<FixedSizeList> = (props) => {
     </div>
   )
 }
-
-export default FixedSizeList

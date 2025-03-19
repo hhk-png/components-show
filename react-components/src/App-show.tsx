@@ -1,10 +1,10 @@
-import VitualList from "./components-show/VitualList"
+import VirtualList from "./components-show/VirtualList"
 
 function App() {
 
   return (
     <div className="flex">
-      <VitualList></VitualList>
+      <VirtualList></VirtualList>
     </div>
   )
 }

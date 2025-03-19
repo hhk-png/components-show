@@ -20,7 +20,6 @@ export interface DynamicSizeListProps {
   width: number
   itemCount: number
   itemEstimatedSize?: number
-  getItemSize?: (index: number) => number
   children: React.ComponentType<DynamicRow>
 }
 
@@ -44,7 +43,7 @@ const getItemLayoutdata = (
   props: DynamicSizeListProps,
   index: number
 ): MeasuredData => {
-  const { getItemSize, itemEstimatedSize = 50 } = props
+  const { itemEstimatedSize = 50 } = props
   if (index > lastMeasuredItemIndex) {
     let offset = 0
     if (lastMeasuredItemIndex >= 0) {
@@ -53,9 +52,8 @@ const getItemLayoutdata = (
     }
 
     for (let i = lastMeasuredItemIndex + 1; i <= index; i++) {
-      const currentItemSize = getItemSize ? getItemSize(i) : itemEstimatedSize
-      measuredDataMap[i] = { size: currentItemSize, offset }
-      offset += currentItemSize
+      measuredDataMap[i] = { size: itemEstimatedSize, offset }
+      offset += itemEstimatedSize
     }
 
     lastMeasuredItemIndex = index
@@ -182,7 +180,7 @@ const ListItem: React.FC<ListItemProps> = React.memo(
     prevProps.style.height === nextProps.style.height
 )
 
-const DynamicSizeList: React.FC<DynamicSizeListProps> = (props) => {
+export const DynamicSizeList: React.FC<DynamicSizeListProps> = (props) => {
   const {
     height,
     width,
@@ -256,5 +254,3 @@ const DynamicSizeList: React.FC<DynamicSizeListProps> = (props) => {
     </div>
   )
 }
-
-export default DynamicSizeList

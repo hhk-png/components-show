@@ -1,6 +1,6 @@
 import React from 'react'
-import DynamicSizeList, { type DynamicRow } from './DynamicSizeList'
-import FixedSizeList, { type FixedRow } from './FixedSizeList'
+import { DynamicSizeList, type DynamicRow } from './DynamicSizeList'
+import { FixedSizeList, type FixedRow } from './FixedSizeList'
 
 const heightCache: Record<number, number> = {}
 const Row: React.FC<DynamicRow> = ({ index }) => {
