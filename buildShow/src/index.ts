@@ -79,3 +79,5 @@ componentsList.forEach(resolveMd)
 // save components list
 const componentsListSavePath = path.resolve(currFilePath, '../../../react-components/public/componentsList.json')
 writeFileSync(componentsListSavePath, JSON.stringify(componentsList))
+
+console.log('All succsess!')
