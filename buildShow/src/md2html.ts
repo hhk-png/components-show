@@ -2,6 +2,7 @@ import { marked } from 'marked'
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import path, { posix as pathPosix } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { createHighlighter } from 'shiki'
 
 export async function resolveMd(name: string) {
 
@@ -20,6 +21,14 @@ export async function resolveMd(name: string) {
     return
   }
   const componentContent = readFileSync(componentMdPath).toString()
+
+  // shiki
+  const highlighter = await createHighlighter({
+    themes: ['slack-dark', 'vitesse-dark'],
+    langs: ['tsx', 'typescript', 'javascript'],
+  })
+
+  // marked extension
   marked.use({
     renderer: {
       image: function ({ href, title, text }) {
@@ -30,9 +39,17 @@ export async function resolveMd(name: string) {
         const newSrc = pathPosix.join('/components-show/MD/images', imageName)
 
         return `<img src="${newSrc}" alt="${text}" title="${title || ''}" />`
+      },
+      code: function({ text, lang }) {
+        const html = highlighter.codeToHtml(text, {
+          lang: lang!,
+          theme: 'vitesse-dark',
+        })
+        return html
       }
     }
   })
+
   const html = await marked.parse(componentContent)
   writeFileSync(path.resolve(targetMdDir, name) + '.html', html)
 }
