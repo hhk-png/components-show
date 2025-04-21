@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
 const Button: React.FC = () => {
-  return <button className="w-10 h-10 bg-blue-700">Button</button>
+  return <div className='text-4xl font-bold text-gray-700'>Welcome!</div>
 }
 
 export default Button

@@ -25,7 +25,7 @@ export async function resolveMd(name: string) {
   // shiki
   const highlighter = await createHighlighter({
     themes: ['slack-dark', 'vitesse-dark'],
-    langs: ['tsx', 'typescript', 'javascript'],
+    langs: ['tsx', 'typescript', 'javascript', 'vue'],
   })
 
   // marked extension
