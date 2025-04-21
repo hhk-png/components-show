@@ -39,7 +39,7 @@ const FixedRow: React.FC<FixedRow> = ({ index, style }) => {
 const VirtualList: React.FC = () => {
   return (
     <div className='flex w-full justify-around'>
-      <DynamicSizeList height={300} width={300} itemCount={1000}>
+      <DynamicSizeList height={300} width={300} itemCount={1000000}>
         {Row}
       </DynamicSizeList>
       <FixedSizeList height={300} width={300} itemSize={50} itemCount={1000}>

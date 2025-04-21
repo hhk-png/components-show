@@ -5,7 +5,7 @@ import DynamicSizeList from './DynamicSizeList.vue'
 
 <template>
   <div class="flex w-full justify-around items-center">
-    <DynamicSizeList :height="300" :width="300" :itemCount="1000" :item-estimated-size="50">
+    <DynamicSizeList :height="300" :width="300" :itemCount="1000000" :item-estimated-size="50">
       <template #default="{ index }">
         <div 
         :style="{height: 20 + Math.floor(Math.random() * 50) + 'px'}" 

@@ -11,6 +11,8 @@ interface MeasuredData {
   offset: number
 }
 
+type MeasuredDataMap = Record<number, MeasuredData>
+
 export interface DynamicRow {
   index: number
 }
@@ -23,53 +25,56 @@ export interface DynamicSizeListProps {
   children: React.ComponentType<DynamicRow>
 }
 
-const measuredDataMap: Record<number, MeasuredData> = {}
-let lastMeasuredItemIndex: number = -1
-
 const estimateHeight = (
   defaultItemSize: number = 50,
-  itemCount: number
+  itemCount: number,
+  lastMeasuredItemIndex: React.RefObject<number>,
+  measuredDataMap: React.RefObject<MeasuredDataMap>
 ): number => {
   let measuredHeight: number = 0
-  if (lastMeasuredItemIndex >= 0) {
-    const lastMeasuredItem = measuredDataMap[lastMeasuredItemIndex]
+  if (lastMeasuredItemIndex.current >= 0) {
+    const lastMeasuredItem = measuredDataMap.current[lastMeasuredItemIndex.current]
     measuredHeight = lastMeasuredItem.offset + lastMeasuredItem.size
   }
-  const unMeasutedItemsCount = itemCount - lastMeasuredItemIndex - 1
+  const unMeasutedItemsCount = itemCount - lastMeasuredItemIndex.current - 1
   return measuredHeight + unMeasutedItemsCount * defaultItemSize
 }
 
 const getItemLayoutdata = (
   props: DynamicSizeListProps,
-  index: number
+  index: number,
+  lastMeasuredItemIndex: React.RefObject<number>,
+  measuredDataMap: React.RefObject<MeasuredDataMap>
 ): MeasuredData => {
   const { itemEstimatedSize = 50 } = props
-  if (index > lastMeasuredItemIndex) {
+  if (index > lastMeasuredItemIndex.current) {
     let offset = 0
-    if (lastMeasuredItemIndex >= 0) {
-      const lastItem = measuredDataMap[lastMeasuredItemIndex]
+    if (lastMeasuredItemIndex.current >= 0) {
+      const lastItem = measuredDataMap.current[lastMeasuredItemIndex.current]
       offset += lastItem.offset + lastItem.size
     }
 
-    for (let i = lastMeasuredItemIndex + 1; i <= index; i++) {
-      measuredDataMap[i] = { size: itemEstimatedSize, offset }
+    for (let i = lastMeasuredItemIndex.current + 1; i <= index; i++) {
+      measuredDataMap.current[i] = { size: itemEstimatedSize, offset }
       offset += itemEstimatedSize
     }
 
-    lastMeasuredItemIndex = index
+    lastMeasuredItemIndex.current = index
   }
-  return measuredDataMap[index]
+  return measuredDataMap.current[index]
 }
 
 const binarySearch = (
   props: DynamicSizeListProps,
   low: number,
   high: number,
-  target: number
+  target: number,
+  lastMeasuredItemIndex: React.RefObject<number>,
+  measuredDataMap: React.RefObject<MeasuredDataMap>
 ) => {
   while (low <= high) {
     const mid = low + Math.floor((high - low) / 2)
-    const currentOffset = getItemLayoutdata(props, mid).offset
+    const currentOffset = getItemLayoutdata(props, mid, lastMeasuredItemIndex, measuredDataMap).offset
 
     if (currentOffset === target) {
       return mid
@@ -86,12 +91,14 @@ const binarySearch = (
 const expSearch = (
   props: DynamicSizeListProps,
   index: number,
-  target: number
+  target: number,
+  lastMeasuredItemIndex: React.RefObject<number>,
+  measuredDataMap: React.RefObject<MeasuredDataMap>
 ) => {
   const { itemCount } = props
   let exp = 1
 
-  while (index < itemCount && getItemLayoutdata(props, index).offset < target) {
+  while (index < itemCount && getItemLayoutdata(props, index, lastMeasuredItemIndex, measuredDataMap).offset < target) {
     index += exp
     exp *= 2
   }
@@ -100,34 +107,43 @@ const expSearch = (
     props,
     Math.floor(index / 2),
     Math.min(index, itemCount - 1),
-    target
+    target,
+    lastMeasuredItemIndex,
+    measuredDataMap
   )
 }
 
-const getStartIndex = (props: DynamicSizeListProps, scrollOffset: number) => {
+const getStartIndex = (
+  props: DynamicSizeListProps, 
+  scrollOffset: number,
+  lastMeasuredItemIndex: React.RefObject<number>,
+  measuredDataMap: React.RefObject<MeasuredDataMap>
+): number => {
   if (scrollOffset === 0) {
     return 0
   }
 
-  if (measuredDataMap[lastMeasuredItemIndex].offset >= scrollOffset) {
-    return binarySearch(props, 0, lastMeasuredItemIndex, scrollOffset)
+  if (measuredDataMap.current[lastMeasuredItemIndex.current].offset >= scrollOffset) {
+    return binarySearch(props, 0, lastMeasuredItemIndex.current, scrollOffset, lastMeasuredItemIndex, measuredDataMap)
   }
-  return expSearch(props, Math.max(0, lastMeasuredItemIndex), scrollOffset)
+  return expSearch(props, Math.max(0, lastMeasuredItemIndex.current), scrollOffset, lastMeasuredItemIndex, measuredDataMap)
 }
 
 const getEndIndex = (
   props: DynamicSizeListProps,
-  startIndex: number
+  startIndex: number,
+  lastMeasuredItemIndex: React.RefObject<number>,
+  measuredDataMap: React.RefObject<MeasuredDataMap>
 ): number => {
   const { height, itemCount } = props
-  const startItem = getItemLayoutdata(props, startIndex)
+  const startItem = getItemLayoutdata(props, startIndex, lastMeasuredItemIndex, measuredDataMap)
   const maxOffset = startItem.offset + height
   let offset = startItem.offset + startItem.size
   let endIndex = startIndex
 
   while (offset <= maxOffset && endIndex < itemCount - 1) {
     endIndex++
-    const currentItemLayout = getItemLayoutdata(props, endIndex)
+    const currentItemLayout = getItemLayoutdata(props, endIndex, lastMeasuredItemIndex, measuredDataMap)
     offset += currentItemLayout.size
   }
 
@@ -136,11 +152,13 @@ const getEndIndex = (
 
 const getRangeToRender = (
   props: DynamicSizeListProps,
-  scrollOffset: number
+  scrollOffset: number,
+  lastMeasuredItemIndex: React.RefObject<number>,
+  measuredDataMap: React.RefObject<MeasuredDataMap>
 ): [number, number] => {
   const { itemCount } = props
-  const startIndex = getStartIndex(props, scrollOffset)
-  const endIndex = getEndIndex(props, startIndex)
+  const startIndex = getStartIndex(props, scrollOffset, lastMeasuredItemIndex, measuredDataMap)
+  const endIndex = getEndIndex(props, startIndex, lastMeasuredItemIndex, measuredDataMap)
   return [Math.max(0, startIndex - 2), Math.min(itemCount - 1, endIndex + 2)]
 }
 
@@ -191,6 +209,9 @@ export const DynamicSizeList: React.FC<DynamicSizeListProps> = (props) => {
   const [scrollOffset, setScrollOffset] = useState(0)
   const [, setState] = useState({})
 
+  const measuredDataMap = useRef<MeasuredDataMap>({})
+  const lastMeasuredItemIndex = useRef<number>(-1)
+
   const containerStyle: CSSProperties = {
     position: 'relative',
     width,
@@ -200,18 +221,23 @@ export const DynamicSizeList: React.FC<DynamicSizeListProps> = (props) => {
   }
 
   const contentStyle: CSSProperties = {
-    height: estimateHeight(itemEstimatedSize, itemCount),
+    height: estimateHeight(
+      itemEstimatedSize, 
+      itemCount, 
+      lastMeasuredItemIndex, 
+      measuredDataMap
+    ),
     width: '100%',
   }
 
   const sizeChangeHandle = (index: number, domNode: HTMLElement) => {
     const height = domNode.offsetHeight
-    if (measuredDataMap[index]?.size !== height) {
-      measuredDataMap[index].size = height
+    if (measuredDataMap.current[index]?.size !== height) {
+      measuredDataMap.current[index].size = height
 
-      let offset = 0
-      for (let i = 0; i <= lastMeasuredItemIndex; i++) {
-        const layoutData = measuredDataMap[i]
+      let offset = measuredDataMap.current[index].offset + height
+      for (let i = index + 1; i <= lastMeasuredItemIndex.current; i++) {
+        const layoutData = measuredDataMap.current[i]
         layoutData.offset = offset
         offset += layoutData.size
       }
@@ -220,10 +246,10 @@ export const DynamicSizeList: React.FC<DynamicSizeListProps> = (props) => {
   }
 
   const getCurrentChildren = () => {
-    const [startIndex, endIndex] = getRangeToRender(props, scrollOffset)
+    const [startIndex, endIndex] = getRangeToRender(props, scrollOffset, lastMeasuredItemIndex, measuredDataMap)
     const items: ReactNode[] = []
     for (let i = startIndex; i <= endIndex; i++) {
-      const item = getItemLayoutdata(props, i)
+      const item = getItemLayoutdata(props, i, lastMeasuredItemIndex, measuredDataMap)
       const itemStyle: CSSProperties = {
         position: 'absolute',
         height: item.size,

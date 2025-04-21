@@ -157,18 +157,18 @@ const contentStyle = ref({
   width: '100%'
 })
 
-
 const sizeChangeHandle = (index: number, domNode: HTMLElement) => {
   const height = domNode.offsetHeight
   if (measuredDataMap[index]?.size !== height) {
     measuredDataMap[index].size = height
 
-    let offset = 0
-    for (let i = 0; i <= lastMeasuredItemIndex; i++) {
+    let offset = measuredDataMap[index].offset + height
+    for (let i = index + 1; i <= lastMeasuredItemIndex; i++) {
       const layoutData = measuredDataMap[i]
       layoutData.offset = offset
       offset += layoutData.size
     }
+
     // recaculate content height
     contentStyle.value.height = `${estimateHeight(props.itemEstimatedSize, props.itemCount)}px`
     forceUpdate.value = !forceUpdate.value
@@ -206,7 +206,7 @@ const getCurrentChildren = () => {
 const scrollHandle = throttle((e: Event) => {
   const { scrollTop } = e.target as HTMLElement
   scrollOffset.value = scrollTop
-}, 100)
+}, 50)
 
 </script>
 
