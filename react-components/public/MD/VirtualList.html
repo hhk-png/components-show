@@ -1,7 +1,7 @@
 <p>本篇文章是《组件是怎样写的》系列文章的第一篇，该系列文章主要说一下各组件实现的具体逻辑，组件种类取自 element-plus 和 antd 组件库。</p>
-<p>每个组件都会有 vue 和 react 两种实现方式，可以点击 <a href="https://hhk-png.github.io/components-show/">https://hhk-png.github.io/components-show/</a> 查看，项目的 github 地址为：<a href="https://github.com/hhk-png/components-show">https://github.com/hhk-png/components-show</a>。</p>
+<p>每个组件都会有 vue 和 react 两种实现方式，可以点击 <a href="https://hhk-png.github.io/components-show/" title="" target="_blank">https://hhk-png.github.io/components-show/</a> 查看，项目的 github 地址为：<a href="https://github.com/hhk-png/components-show" title="" target="_blank">https://github.com/hhk-png/components-show</a>。</p>
 <h2>简介</h2>
-<p>本片文章讲解一下 <strong>虚拟列表</strong> 的实现，代码主要来源于<a href="https://juejin.cn/post/7232856799170805820">https://juejin.cn/post/7232856799170805820</a>，然后在其基础上做了一些优化。</p>
+<p>本片文章讲解一下 <strong>虚拟列表</strong> 的实现，代码主要来源于<a href="https://juejin.cn/post/7232856799170805820" title="" target="_blank">https://juejin.cn/post/7232856799170805820</a>，然后在其基础上做了一些优化。</p>
 <p>如果在浏览器中渲染有大量数据数据的列表，比如 100 万条，并且设置滚动，在打开这个页面的时候，浏览器所承担的渲染压力将会急速放大，浏览器将会崩溃。虚拟列表应对该种情况的处理方式是将列表渲染时的计算量从渲染进程中转换到了 js 中，从而降低浏览器的渲染压力，使这种数量的列表可以正常渲染。</p>
 <p>在用户端，用户对序列表做的操作主要是使用鼠标的滚轮滑动列表，或者通过拖拽滚动条的方式，两者都会反映到元素的 scroll 事件上。因此，在实现虚拟列表时，主要是根据滑动距离挑选出特定的需要展示的列表项，每次滑动都执行该操作。</p>
 <p>本文中，虚拟列表分为定高列表与不定高列表，仅考虑上下滑动的情况。在挑选需要展示的列表项时，要先获取到列表项的起始位置与结束位置，然后将这一部分的元素截取出来。列表项的数量是手动设定的，对于定高列表，由于元素高度固定，所以元素总的高度也是固定的，选择起始与结束位置时的时间复杂度和数组一样是 <code>O(1)</code>。对于不定高列表，因为元素高度不确定，所以会在内部维护一个元素高度的缓存，需要根据该缓存得到要展示元素的起始坐标，元素高度通过 <code>ResizeObserver</code> 监听元素获取。</p>
@@ -442,6 +442,6 @@
 <span class="line"><span style="color:#4D9375">  return</span><span style="color:#BD976A"> Math</span><span style="color:#666666">.</span><span style="color:#80A665">max</span><span style="color:#666666">(</span><span style="color:#BD976A">low</span><span style="color:#CB7676"> -</span><span style="color:#4C9A91"> 1</span><span style="color:#666666">)</span></span>
 <span class="line"><span style="color:#666666">}</span></span></code></pre><h2>Vue 版本的虚拟列表实现</h2>
 <p>vue 版本的虚拟列表使用 SFC 实现，与 tsx 所不相同的是一个文件只能放置一个组件，因此需要将 tsx 中的组件拆到单个文件中。然后 vue 中嵌套组件需要通过 slot 的方式来实现。</p>
-<p>vue 版本的具体实现逻辑与之前讲的几乎相同，因为写代码的时间距离写博客相差较远，所以基本上忘了两者的异同，可以点击<a href="http://localhost:5173/components-show">http://localhost:5173/components-show</a>或者<a href="https://github.com/hhk-png/components-show/tree/main/vue-components/src/components-show/VirtualList">https://github.com/hhk-png/components-show/tree/main/vue-components/src/components-show/VirtualList</a>以查看具体实现，在此不作讲述。</p>
+<p>vue 版本的具体实现逻辑与之前讲的几乎相同，因为写代码的时间距离写博客相差较远，所以基本上忘了两者的异同，可以点击<a href="http://localhost:5173/components-show" title="" target="_blank">http://localhost:5173/components-show</a>或者<a href="https://github.com/hhk-png/components-show/tree/main/vue-components/src/components-show/VirtualList" title="" target="_blank">https://github.com/hhk-png/components-show/tree/main/vue-components/src/components-show/VirtualList</a>以查看具体实现，在此不作讲述。</p>
 <h2>参考资料</h2>
-<p><a href="https://juejin.cn/post/7232856799170805820">https://juejin.cn/post/7232856799170805820</a></p>
+<p><a href="https://juejin.cn/post/7232856799170805820" title="" target="_blank">https://juejin.cn/post/7232856799170805820</a></p>

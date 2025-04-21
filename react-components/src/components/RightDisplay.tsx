@@ -2,6 +2,7 @@ import React, { useState, useEffect, Suspense } from 'react'
 import { joinClassName } from '~/utils/css'
 import { FileTree } from '~/types/file.ts'
 import Code from './Code'
+import './RightDisplay.css'
 
 interface RightDisplayProps {
   className?: string
@@ -103,7 +104,7 @@ const RightDisplay: React.FC<RightDisplayProps> = ({
       ) : (
         <div
           dangerouslySetInnerHTML={{ __html: blogHtml }}
-          className="overflow-hidden mx-40 mb-100 user-select-text"
+          className="blog overflow-hidden mx-40 mb-100 user-select-text"
         ></div>
       )}
     </div>

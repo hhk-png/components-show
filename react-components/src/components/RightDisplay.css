@@ -1,0 +1,44 @@
+.blog p {
+  margin: 5px 0;
+}
+
+.blog p code {
+  background-color: #eee;
+  border-radius: 1px;
+}
+
+.blog pre {
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.blog a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.blog h1 {
+  font-size: 2em;
+  font-weight: bold;
+  margin: 0.5em 0;
+}
+
+.blog h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0.5em 0;
+}
+
+.blog h3 {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 0.5em 0;
+}
+
+.blog h4 {
+  font-size: 1.1em;
+  font-weight: bold;
+  margin: 0.5em 0;
+}
+
+

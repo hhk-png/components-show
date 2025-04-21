@@ -46,6 +46,9 @@ export async function resolveMd(name: string) {
           theme: 'vitesse-dark',
         })
         return html
+      },
+      link: function({ href, title, text }) {
+        return `<a href="${href}" title="${title || ''}" target="_blank">${text}</a>`
       }
     }
   })
