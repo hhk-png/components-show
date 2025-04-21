@@ -41,7 +41,7 @@ jobs:
         working-directory: buildShow
 
       - name: build show
-        run: pnpm run dev
+        run: pnpm run build
         working-directory: buildShow
 
       # react project
