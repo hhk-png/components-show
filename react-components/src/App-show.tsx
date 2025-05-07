@@ -1,10 +1,10 @@
-import VirtualList from "./components-show/VirtualList"
+import ClickToToast from "./components-show/Toast"
 
 function App() {
 
   return (
     <div className="flex">
-      <VirtualList></VirtualList>
+      <ClickToToast></ClickToToast>
     </div>
   )
 }

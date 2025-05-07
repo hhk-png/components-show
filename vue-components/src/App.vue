@@ -1,12 +1,18 @@
 <script setup lang="ts">
-import VirtualList from './components-show/VirtualList'
+import { getCurrentInstance } from 'vue';
+
+const global = getCurrentInstance()?.appContext.config.globalProperties
+
+const toast = () => {
+  global?.$toast.show('hello world')
+}
 
 </script>
 
 <template>
-  <VirtualList></VirtualList>
+  <button @click="toast" class="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer">
+    click
+  </button>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
