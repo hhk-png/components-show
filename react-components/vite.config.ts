@@ -66,6 +66,9 @@ export default defineConfig(({ mode }) => {
         '~': resolve('./src'),
       },
     },
-    plugins: [react(), tailwindcss()],
+    plugins: [
+      react(),
+      tailwindcss()
+    ],
   }
 })

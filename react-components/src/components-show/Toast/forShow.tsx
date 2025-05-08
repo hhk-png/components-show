@@ -1,7 +1,6 @@
 import React, { useCallback } from "react"
 import { createToast } from "./ToastManager"
 
-
 const ClickToToast: React.FC = () => {
 
   const toast = useCallback(() => {
