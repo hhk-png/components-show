@@ -1,18 +1,22 @@
 <script setup lang="ts">
-import { getCurrentInstance } from 'vue';
+import { ToastContainer } from './components-show/Notification'
+import { useToast } from './components-show/Notification'
 
-const global = getCurrentInstance()?.appContext.config.globalProperties
+const notification = useToast()
 
-const toast = () => {
-  global?.$toast.show('hello world')
+const handleClick = () => {
+  notification.success('This is a success message')
 }
-
 </script>
 
 <template>
-  <button @click="toast" class="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer">
+  <ToastContainer></ToastContainer>
+  <div
+    @click="handleClick"
+    class="w-30 h-20 bg-blue-500 rounded text-white flex items-center justify-center"
+  >
     click
-  </button>
+  </div>
 </template>
 
 <style scoped></style>

@@ -1,6 +1,9 @@
 import { createApp, type Plugin } from "vue"
 import type { ToastProps } from "./types"
 import Toast from "./Toast.vue"
+import ToastUI from './ForShow.vue'
+
+export default ToastUI
 
 let toastInstance: any
 export const createToast = (options: ToastProps) => {
