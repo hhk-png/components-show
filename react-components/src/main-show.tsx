@@ -1,10 +1,10 @@
 import { createRoot } from 'react-dom/client'
-import './style.css'
 import App from './App-show'
 import { ToastContextProvider } from './components-show/Notification/index'
+import './style.css'
 
 createRoot(document.getElementById('root')!).render(
-  <ToastContextProvider position='top-right'>
+  <ToastContextProvider position="top-right">
     <App />
-  </ToastContextProvider>
+  </ToastContextProvider>,
 )

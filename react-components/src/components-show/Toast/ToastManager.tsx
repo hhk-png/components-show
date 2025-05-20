@@ -3,7 +3,7 @@ import Toast from './Toast'
 
 let toastRoot: ReactDOM.Root | null = null
 let toastId = 0
-export const createToast = (message: string, duration = 1000) => {
+export function createToast(message: string, duration = 1000) {
   if (toastRoot === null) {
     const container = document.createElement('div')
     document.body.appendChild(container)
@@ -15,6 +15,6 @@ export const createToast = (message: string, duration = 1000) => {
       key={toastId++}
       message={message}
       duration={duration}
-    />
+    />,
   )
 }

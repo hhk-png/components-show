@@ -1,6 +1,8 @@
-import React, {
+import type {
   CSSProperties,
   ReactNode,
+} from 'react'
+import React, {
   useEffect,
   useRef,
   useState,
@@ -25,12 +27,7 @@ export interface DynamicSizeListProps {
   children: React.ComponentType<DynamicRow>
 }
 
-const estimateHeight = (
-  defaultItemSize: number = 50,
-  itemCount: number,
-  lastMeasuredItemIndex: React.RefObject<number>,
-  measuredDataMap: React.RefObject<MeasuredDataMap>
-): number => {
+function estimateHeight(defaultItemSize: number = 50, itemCount: number, lastMeasuredItemIndex: React.RefObject<number>, measuredDataMap: React.RefObject<MeasuredDataMap>): number {
   let measuredHeight: number = 0
   if (lastMeasuredItemIndex.current >= 0) {
     const lastMeasuredItem = measuredDataMap.current[lastMeasuredItemIndex.current]
@@ -40,12 +37,7 @@ const estimateHeight = (
   return measuredHeight + unMeasutedItemsCount * defaultItemSize
 }
 
-const getItemLayoutdata = (
-  props: DynamicSizeListProps,
-  index: number,
-  lastMeasuredItemIndex: React.RefObject<number>,
-  measuredDataMap: React.RefObject<MeasuredDataMap>
-): MeasuredData => {
+function getItemLayoutdata(props: DynamicSizeListProps, index: number, lastMeasuredItemIndex: React.RefObject<number>, measuredDataMap: React.RefObject<MeasuredDataMap>): MeasuredData {
   const { itemEstimatedSize = 50 } = props
   if (index > lastMeasuredItemIndex.current) {
     let offset = 0
@@ -64,23 +56,18 @@ const getItemLayoutdata = (
   return measuredDataMap.current[index]
 }
 
-const binarySearch = (
-  props: DynamicSizeListProps,
-  low: number,
-  high: number,
-  target: number,
-  lastMeasuredItemIndex: React.RefObject<number>,
-  measuredDataMap: React.RefObject<MeasuredDataMap>
-) => {
+function binarySearch(props: DynamicSizeListProps, low: number, high: number, target: number, lastMeasuredItemIndex: React.RefObject<number>, measuredDataMap: React.RefObject<MeasuredDataMap>) {
   while (low <= high) {
     const mid = low + Math.floor((high - low) / 2)
     const currentOffset = getItemLayoutdata(props, mid, lastMeasuredItemIndex, measuredDataMap).offset
 
     if (currentOffset === target) {
       return mid
-    } else if (currentOffset < target) {
+    }
+    else if (currentOffset < target) {
       low = mid + 1
-    } else {
+    }
+    else {
       high = mid - 1
     }
   }
@@ -88,13 +75,7 @@ const binarySearch = (
   return Math.max(low - 1)
 }
 
-const expSearch = (
-  props: DynamicSizeListProps,
-  index: number,
-  target: number,
-  lastMeasuredItemIndex: React.RefObject<number>,
-  measuredDataMap: React.RefObject<MeasuredDataMap>
-) => {
+function expSearch(props: DynamicSizeListProps, index: number, target: number, lastMeasuredItemIndex: React.RefObject<number>, measuredDataMap: React.RefObject<MeasuredDataMap>) {
   const { itemCount } = props
   let exp = 1
 
@@ -109,16 +90,11 @@ const expSearch = (
     Math.min(index, itemCount - 1),
     target,
     lastMeasuredItemIndex,
-    measuredDataMap
+    measuredDataMap,
   )
 }
 
-const getStartIndex = (
-  props: DynamicSizeListProps, 
-  scrollOffset: number,
-  lastMeasuredItemIndex: React.RefObject<number>,
-  measuredDataMap: React.RefObject<MeasuredDataMap>
-): number => {
+function getStartIndex(props: DynamicSizeListProps, scrollOffset: number, lastMeasuredItemIndex: React.RefObject<number>, measuredDataMap: React.RefObject<MeasuredDataMap>): number {
   if (scrollOffset === 0) {
     return 0
   }
@@ -129,12 +105,7 @@ const getStartIndex = (
   return expSearch(props, Math.max(0, lastMeasuredItemIndex.current), scrollOffset, lastMeasuredItemIndex, measuredDataMap)
 }
 
-const getEndIndex = (
-  props: DynamicSizeListProps,
-  startIndex: number,
-  lastMeasuredItemIndex: React.RefObject<number>,
-  measuredDataMap: React.RefObject<MeasuredDataMap>
-): number => {
+function getEndIndex(props: DynamicSizeListProps, startIndex: number, lastMeasuredItemIndex: React.RefObject<number>, measuredDataMap: React.RefObject<MeasuredDataMap>): number {
   const { height, itemCount } = props
   const startItem = getItemLayoutdata(props, startIndex, lastMeasuredItemIndex, measuredDataMap)
   const maxOffset = startItem.offset + height
@@ -150,12 +121,7 @@ const getEndIndex = (
   return endIndex
 }
 
-const getRangeToRender = (
-  props: DynamicSizeListProps,
-  scrollOffset: number,
-  lastMeasuredItemIndex: React.RefObject<number>,
-  measuredDataMap: React.RefObject<MeasuredDataMap>
-): [number, number] => {
+function getRangeToRender(props: DynamicSizeListProps, scrollOffset: number, lastMeasuredItemIndex: React.RefObject<number>, measuredDataMap: React.RefObject<MeasuredDataMap>): [number, number] {
   const { itemCount } = props
   const startIndex = getStartIndex(props, scrollOffset, lastMeasuredItemIndex, measuredDataMap)
   const endIndex = getEndIndex(props, startIndex, lastMeasuredItemIndex, measuredDataMap)
@@ -174,7 +140,8 @@ const ListItem: React.FC<ListItemProps> = React.memo(
     const domRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-      if (!domRef.current) return
+      if (!domRef.current)
+        return
       const domNode = domRef.current.firstChild as HTMLElement
       const resizeObserver = new ResizeObserver(() => {
         onSizeChange(index, domNode)
@@ -193,9 +160,9 @@ const ListItem: React.FC<ListItemProps> = React.memo(
     )
   },
   (prevProps, nextProps) =>
-    prevProps.index === nextProps.index &&
-    prevProps.style.top === nextProps.style.top &&
-    prevProps.style.height === nextProps.style.height
+    prevProps.index === nextProps.index
+    && prevProps.style.top === nextProps.style.top
+    && prevProps.style.height === nextProps.style.height,
 )
 
 export const DynamicSizeList: React.FC<DynamicSizeListProps> = (props) => {
@@ -222,10 +189,10 @@ export const DynamicSizeList: React.FC<DynamicSizeListProps> = (props) => {
 
   const contentStyle: CSSProperties = {
     height: estimateHeight(
-      itemEstimatedSize, 
-      itemCount, 
-      lastMeasuredItemIndex, 
-      measuredDataMap
+      itemEstimatedSize,
+      itemCount,
+      lastMeasuredItemIndex,
+      measuredDataMap,
     ),
     width: '100%',
   }
@@ -263,7 +230,7 @@ export const DynamicSizeList: React.FC<DynamicSizeListProps> = (props) => {
           style={itemStyle}
           ChildComp={Child}
           onSizeChange={sizeChangeHandle}
-        />
+        />,
       )
     }
     return items

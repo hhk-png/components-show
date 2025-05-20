@@ -1,4 +1,3 @@
-
 export const toastTypes = {
   success: {
     progressBarClass: 'success',

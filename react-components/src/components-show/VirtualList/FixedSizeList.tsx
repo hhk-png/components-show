@@ -1,20 +1,20 @@
-import React, { useState, useRef } from 'react'
 import type { CSSProperties } from 'react'
+import React, { useRef, useState } from 'react'
 
-export interface FixedRow {
+export interface FixedRowProps {
   index: number
   style: React.CSSProperties
 }
 
-export interface FixedSizeList {
+export interface FixedSizeListProps {
   height: number
   width: number
   itemSize: number
   itemCount: number
-  children: React.ComponentType<FixedRow>
+  children: React.ComponentType<FixedRowProps>
 }
 
-export const FixedSizeList: React.FC<FixedSizeList> = (props) => {
+export const FixedSizeList: React.FC<FixedSizeListProps> = (props) => {
   const { height, width, itemCount, itemSize, children: Child } = props
   const [scrollOffset, setScrollOffset] = useState<number>(0)
 
@@ -42,7 +42,8 @@ export const FixedSizeList: React.FC<FixedSizeList> = (props) => {
     for (let i = finalStartIndex; i < endIndex; i++) {
       if (cacheRef.current.has(i)) {
         items.push(cacheRef.current.get(i))
-      } else {
+      }
+      else {
         const itemStyle: React.CSSProperties = {
           position: 'absolute',
           height: itemSize,

@@ -1,5 +1,5 @@
-import Popover from "./Popover"
-import PopoverForShow from "./ForShow"
+import PopoverForShow from './ForShow'
+import Popover from './Popover'
 
 export * from './types'
 export { Popover }

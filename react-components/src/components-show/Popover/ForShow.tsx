@@ -1,6 +1,6 @@
 import Popover from './Popover'
 
-const PopoverForShow = () => {
+function PopoverForShow() {
   return (
     <Popover content={<div>This is the popover content!</div>}>hover</Popover>
   )

@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react'
 
-type ToastProps = {
+interface ToastProps {
   message: string
   duration: number
 }
 
 const Toast: React.FC<ToastProps> = ({ message, duration }) => {
   const [isVisible, setIsVisible] = useState(true)
-  const [opacity, setOpacity] = useState(0)
+  const [opacity, setOpacity] = useState(1)
 
   useEffect(() => {
-    setOpacity(1)
-
     const timer1 = setTimeout(() => {
       setOpacity(0)
     }, duration)
@@ -24,7 +22,7 @@ const Toast: React.FC<ToastProps> = ({ message, duration }) => {
       clearTimeout(timer1)
       clearTimeout(timer2)
     }
-  }, [])
+  }, [duration])
 
   return (
     isVisible && (
@@ -34,7 +32,7 @@ const Toast: React.FC<ToastProps> = ({ message, duration }) => {
         text-white p-2 rounded z-[9999] transition-opacity 
         duration-500 opacity-${opacity}`}
       >
-        <div className='inline-block mx-2.5'>{message}</div>
+        <div className="inline-block mx-2.5">{message}</div>
       </div>
     )
   )

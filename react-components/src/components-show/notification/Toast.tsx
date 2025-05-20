@@ -1,8 +1,9 @@
+import type { ToastProps } from './types'
 import React, { useEffect, useRef } from 'react'
+import { toastTypes } from './types'
 import { useToast } from './useToast'
-import { ToastProps, toastTypes } from './types'
 
-const getBgColorClass = (type: string) => {
+function getBgColorClass(type: string) {
   switch (type) {
     case 'success':
       return 'bg-blue-500'
@@ -19,7 +20,7 @@ const getBgColorClass = (type: string) => {
 
 const Toast: React.FC<ToastProps> = ({ message, type, id }) => {
   const { progressBarClass } = toastTypes[type]
-  const toast: any = useToast()
+  const toast = useToast()
 
   const timerID = useRef<ReturnType<typeof setTimeout>>(null)
 
@@ -43,10 +44,10 @@ const Toast: React.FC<ToastProps> = ({ message, type, id }) => {
     progressRef.current!.style.animationPlayState = 'paused'
   }
   const handleMouseLeave = () => {
-    const remainingTime =
-      (progressRef.current!.offsetWidth /
-        progressRef.current!.parentElement!.offsetWidth) *
-      4000
+    const remainingTime
+      = (progressRef.current!.offsetWidth
+        / progressRef.current!.parentElement!.offsetWidth)
+      * 4000
 
     progressRef.current!.style.animationPlayState = 'running'
 
@@ -58,22 +59,23 @@ const Toast: React.FC<ToastProps> = ({ message, type, id }) => {
   return (
     <div
       className={`${getBgColorClass(
-        type
+        type,
       )} rounded flex relative justify-between 
       align-center p-3 w-70 animation-toast`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <p className='text-white mr-2'>{message}</p>
-      <button onClick={handleDismiss} className='text-white'>
+      <p className="text-white mr-2">{message}</p>
+      <button onClick={handleDismiss} className="text-white">
         x
       </button>
 
-      <div className='absolute bottom-0 left-0 right-0 w-full h-1'>
+      <div className="absolute bottom-0 left-0 right-0 w-full h-1">
         <div
           ref={progressRef}
           className={`h-full bg-gray-400 rounded-b animation-progress-bar ${progressBarClass}`}
-        ></div>
+        >
+        </div>
       </div>
     </div>
   )

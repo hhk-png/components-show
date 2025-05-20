@@ -1,16 +1,14 @@
+import type { CompDir, CompFile, FileItem, FileTree } from '~/types/file'
 import React, { useEffect, useState } from 'react'
-import { CompDir, CompFile, FileItem, FileTree } from '~/types/file'
 import { cloneDeep } from '~/utils/all'
 import { joinClassName } from '~/utils/css'
 
 interface CodeProps {
   className?: string
-  code?: FileTree
+  code: FileTree
 }
 
 const Code: React.FC<CodeProps> = ({ code, className }) => {
-  if (!code) return null
-
   const [selectedFileContent, setSelectedFileContent] = useState<string>()
   const [treeData, setTreeData] = useState<FileTree>(code)
   useEffect(() => {
@@ -42,7 +40,8 @@ const Code: React.FC<CodeProps> = ({ code, className }) => {
 
   // recursive render file tree
   const renderFileTree = (tree: FileTree) => {
-    if (!tree) return null
+    if (!tree)
+      return null
 
     return tree.map((item) => {
       if (item.type === 'dir') {
@@ -62,7 +61,8 @@ const Code: React.FC<CodeProps> = ({ code, className }) => {
             )}
           </div>
         )
-      } else {
+      }
+      else {
         return (
           <div
             key={item.path}
@@ -79,7 +79,7 @@ const Code: React.FC<CodeProps> = ({ code, className }) => {
 
   return (
     <div
-      className={`${joinClassName(className!) + 'flex h-screen bg-gray-800'}`}
+      className={`${`${joinClassName(className!)}flex h-screen bg-gray-800`}`}
     >
       {/* Left: File Tree */}
       <div className="w-1/4 bg-gray-900 p-4 overflow-y-auto">
@@ -89,14 +89,17 @@ const Code: React.FC<CodeProps> = ({ code, className }) => {
 
       {/* Right: Code Display */}
       <div className="flex-1 p-1 overflow-y-auto bg-[#121212]-900 text-white">
-        {selectedFileContent ? (
-          <div
-            className="whitespace-pre-wrap break-words"
-            dangerouslySetInnerHTML={{ __html: selectedFileContent }}
-          ></div>
-        ) : (
-          <p>Select a file to view the code...</p>
-        )}
+        {selectedFileContent
+          ? (
+              <div
+                className="whitespace-pre-wrap break-words"
+                dangerouslySetInnerHTML={{ __html: selectedFileContent }}
+              >
+              </div>
+            )
+          : (
+              <p>Select a file to view the code...</p>
+            )}
       </div>
     </div>
   )

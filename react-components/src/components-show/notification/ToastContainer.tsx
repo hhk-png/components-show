@@ -1,13 +1,13 @@
+import type { Position, ToastProps } from './types'
 import Toast from './Toast'
 import './style.css'
-import { Position, ToastProps } from './types'
 
 export interface ToastContainerProps {
   toasts: Array<ToastProps>
   position: Position
 }
 
-const getPositionClass = (position: Position) => {
+function getPositionClass(position: Position) {
   switch (position) {
     case 'top-right':
       return 'top-5 right-5'
@@ -32,7 +32,7 @@ const ToastContainer: React.FC<ToastContainerProps> = ({
 }) => {
   return (
     <div className={`flex flex-col-reverse gap-y-3 fixed z-[9999] ${getPositionClass(position)}`}>
-      {toasts.map((toast) => (
+      {toasts.map(toast => (
         <Toast key={toast.id} {...toast} />
       ))}
     </div>

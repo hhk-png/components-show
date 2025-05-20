@@ -1,8 +1,8 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import tailwindcss from '@tailwindcss/vite'
 import { resolve } from 'node:path'
+import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react-swc'
 import postCssPxToRem from 'postcss-pxtorem'
+import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -27,10 +27,12 @@ export default defineConfig(({ mode }) => {
         input: {
           main: '/src/main.tsx',
           index: '/index.html',
-          ...(isProduction ? {} : {
-            showMain: '/src/main-show.tsx',
-            showHtml: '/index-show.html',
-          }),
+          ...(isProduction
+            ? {}
+            : {
+                showMain: '/src/main-show.tsx',
+                showHtml: '/index-show.html',
+              }),
         },
         output: {
           manualChunks(id) {
@@ -54,12 +56,12 @@ export default defineConfig(({ mode }) => {
 
             if (id.includes('/src/components/')) {
               // 将位于 /src/components/ 下的文件分离为单独的 chunk
-              const componentName = id.split('/src/components/')[1].split('/')[0];
-              return `components-${componentName}`;
+              const componentName = id.split('/src/components/')[1].split('/')[0]
+              return `components-${componentName}`
             }
           },
         },
-      }
+      },
     },
     resolve: {
       alias: {
@@ -68,7 +70,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       react(),
-      tailwindcss()
+      tailwindcss(),
     ],
   }
 })

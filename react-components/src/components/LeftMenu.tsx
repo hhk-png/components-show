@@ -14,9 +14,10 @@ const LeftMenu: React.FC<LeftMenuProps> = ({
   onSelectComponent,
 }) => {
   return (
-    <div className={'flex flex-col gap-2 shrink-0' + (className ? ` ${className}` : '')}>
-      {components.map((component) => (
+    <div className={`flex flex-col gap-2 shrink-0${className ? ` ${className}` : ''}`}>
+      {components.map(component => (
         <button
+          type="button"
           key={component}
           onClick={() => onSelectComponent(component)}
           className={`bg-blue-500 text-white p-3 rounded-lg m-1 mb-0 cursor-pointer 

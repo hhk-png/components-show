@@ -1,6 +1,5 @@
 export type FileType = 'file' | 'dir'
 
-
 export interface CompFile {
   type: FileType
   content: string
