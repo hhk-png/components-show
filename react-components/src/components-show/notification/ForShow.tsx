@@ -1,14 +1,11 @@
+import React from 'react'
 import { useToast } from './useToast'
 
-export { ToastContextProvider } from './ToastContext'
-export type * from './types'
-export { useToast } from './useToast'
-
-const Notification = () => {
+const Notification: React.FC<{}> = () => {
   const toast = useToast()
 
   return (
-    <div className='fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+    <div className=''>
       <div className='flex flex-col items-center justify-center gap-y-5'>
         <button
           className='bg-blue-500 text-white px-4 py-2 rounded-md w-full'

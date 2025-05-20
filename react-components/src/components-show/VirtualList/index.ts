@@ -1,3 +1,3 @@
-import VitualList from "./VirtualList"
+import VitualList from "./ForShow"
 
 export default VitualList

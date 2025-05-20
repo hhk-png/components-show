@@ -18,6 +18,7 @@ export async function resolveMd(name: string) {
   const componentMdPath = path.resolve(mdDir, `${name}/${name}.md`)
   if (!existsSync(componentMdPath)) {
     console.warn(`There is no ${componentMdPath} exists.`)
+    writeFileSync(path.resolve(targetMdDir, name) + '.html', '<center><h1>No blog.</h1></center>')
     return
   }
   const componentContent = readFileSync(componentMdPath).toString()
@@ -40,14 +41,14 @@ export async function resolveMd(name: string) {
 
         return `<img src="${newSrc}" alt="${text}" title="${title || ''}" />`
       },
-      code: function({ text, lang }) {
+      code: function ({ text, lang }) {
         const html = highlighter.codeToHtml(text, {
           lang: lang!,
           theme: 'vitesse-dark',
         })
         return html
       },
-      link: function({ href, title, text }) {
+      link: function ({ href, title, text }) {
         return `<a href="${href}" title="${title || ''}" target="_blank">${text}</a>`
       }
     }
