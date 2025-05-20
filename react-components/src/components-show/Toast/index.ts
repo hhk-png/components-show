@@ -1,3 +1,4 @@
-import ClickToToast from "./ForShow.tsx"
+import ClickToToast from "./ForShow"
 
+export { createToast } from "./ToastManager"
 export default ClickToToast
