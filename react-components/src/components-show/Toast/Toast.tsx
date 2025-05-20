@@ -29,7 +29,7 @@ const Toast: React.FC<ToastProps> = ({ message, duration }) => {
   return (
     isVisible && (
       <div
-        className={`fixed top-1/2 left-1/2 transform 
+        className={`fixed top-1/3 left-1/2 transform 
         -translate-x-1/2 -translate-y-1/2 bg-gray-800 
         text-white p-2 rounded z-[9999] transition-opacity 
         duration-500 opacity-${opacity}`}
