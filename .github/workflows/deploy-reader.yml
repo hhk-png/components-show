@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -63,7 +63,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     needs: build
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     name: Deploy
     steps:
       - name: Deploy to GitHub Pages
