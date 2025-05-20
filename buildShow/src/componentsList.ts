@@ -3,4 +3,5 @@ export default [
   'VirtualList',
   'Toast',
   'Notification',
+  'Popover',
 ]
