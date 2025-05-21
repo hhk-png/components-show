@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ToastContainer } from './components-show/Notification'
+import StepForShow from './components-show/Step'
 </script>
 
 <template>
-  <ToastContainer></ToastContainer>
+  <StepForShow></StepForShow>
 </template>
 
 <style scoped></style>
