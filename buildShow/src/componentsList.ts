@@ -5,4 +5,5 @@ export default [
   'Notification',
   'Popover',
   'Step',
+  'Menu',
 ]

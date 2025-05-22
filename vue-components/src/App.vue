@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import StepForShow from './components-show/Step'
+import Menu from './components-show/Menu'
 </script>
 
 <template>
-  <StepForShow></StepForShow>
+  <Menu></Menu>
 </template>
 
 <style scoped></style>
