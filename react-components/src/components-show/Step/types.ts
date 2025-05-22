@@ -8,8 +8,5 @@ export interface StepProps {
   stepData: StepItem[]
   stepActive: number
   direction?: StepDirection
-}
-
-export interface StepEmits {
-  (e: 'stepClick', index: number): void
+  stepClick?: (index: number) => void
 }

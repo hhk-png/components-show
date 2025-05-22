@@ -70,18 +70,11 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
-import type { StepItem } from './types'
+import type { StepEmits, StepProps } from './types'
 
-const emits = defineEmits<{
-  (e: 'stepClick', index: number): void
-}>()
+const emits = defineEmits<StepEmits>()
 
-defineProps<{
-  stepData: StepItem[]
-  stepActive: number
-  direction?: 'horizontal' | 'vertical'
-}>()
+defineProps<StepProps>()
 
 const handleStepClick = (index: number) => {
   emits('stepClick', index)

@@ -4,4 +4,5 @@ export default [
   'Toast',
   'Notification',
   'Popover',
+  'Step',
 ]
