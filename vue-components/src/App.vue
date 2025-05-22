@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import Menu from './components-show/Menu'
+import Dropdown from './components-show/Dropdown'
 </script>
 
 <template>
-  <Menu></Menu>
+  <Dropdown></Dropdown>
 </template>
 
 <style scoped></style>
