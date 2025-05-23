@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import Dropdown from './components-show/Dropdown'
+import Show from './components-show/BreadCrumb'
 </script>
 
 <template>
-  <Dropdown></Dropdown>
+  <Show></Show>
 </template>
 
 <style scoped></style>

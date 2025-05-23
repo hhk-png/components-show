@@ -1,7 +1,7 @@
-import Dropdown from './components-show/Dropdown'
+import Show from './components-show/BreadCrumb'
 
 function App() {
-  return <Dropdown></Dropdown>
+  return <Show></Show>
 }
 
 export default App
