@@ -2,7 +2,7 @@
   <li
     class="relative"
     @mouseenter="onMouseEnter"
-    @mouseleave="isOpen = false"
+    @mouseleave="onMouseLeave"
     ref="menuRef"
   >
     <button
@@ -67,5 +67,9 @@ const onItemClick = () => {
 const onMouseEnter = () => {
   isOpen.value = true
   checkPosition()
+}
+
+const onMouseLeave = () => {
+  isOpen.value = false
 }
 </script>

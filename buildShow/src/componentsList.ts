@@ -6,4 +6,5 @@ export default [
   'Popover',
   'Step',
   'Menu',
+  'Dropdown'
 ]

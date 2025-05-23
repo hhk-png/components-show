@@ -1,7 +1,7 @@
-import Menu from './components-show/Menu'
+import Dropdown from './components-show/Dropdown'
 
 function App() {
-  return <Menu></Menu>
+  return <Dropdown></Dropdown>
 }
 
 export default App
