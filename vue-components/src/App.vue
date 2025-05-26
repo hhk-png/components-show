@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Show from './components-show/Affix'
+import Show from './components-show/Segmented'
 </script>
 
 <template>

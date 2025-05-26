@@ -1,4 +1,4 @@
-import Show from './components-show/Affix'
+import Show from './components-show/Segmented'
 
 function App() {
   return <Show></Show>

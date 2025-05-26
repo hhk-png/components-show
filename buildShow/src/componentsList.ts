@@ -9,4 +9,5 @@ export default [
   'Dropdown',
   'BreadCrumb',
   'Affix',
+  'Segmented',
 ]
