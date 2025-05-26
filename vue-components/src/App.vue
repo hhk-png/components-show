@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Show from './components-show/BreadCrumb'
+import Show from './components-show/Affix'
 </script>
 
 <template>

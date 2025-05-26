@@ -8,4 +8,5 @@ export default [
   'Menu',
   'Dropdown',
   'BreadCrumb',
+  'Affix',
 ]
