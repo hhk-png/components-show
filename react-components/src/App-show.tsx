@@ -1,4 +1,4 @@
-import Show from './components-show/Tour'
+import Show from './components-show/Timeline'
 
 function App() {
   return <Show></Show>
