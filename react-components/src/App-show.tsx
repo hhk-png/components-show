@@ -1,4 +1,4 @@
-import Show from './components-show/Segmented'
+import Show from './components-show/Tour'
 
 function App() {
   return <Show></Show>

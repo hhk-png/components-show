@@ -10,4 +10,5 @@ export default [
   'BreadCrumb',
   'Affix',
   'Segmented',
+  'Tour',
 ]
