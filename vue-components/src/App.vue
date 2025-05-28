@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Show from './components-show/Tour'
+import Show from './components-show/Timeline'
 </script>
 
 <template>

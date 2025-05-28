@@ -11,4 +11,5 @@ export default [
   'Affix',
   'Segmented',
   'Tour',
+  'Timeline',
 ]

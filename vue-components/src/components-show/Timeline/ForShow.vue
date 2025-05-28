@@ -1,7 +1,8 @@
-import { Timeline } from './Timeline'
-import type { TimelineItem } from './types'
+<script setup lang="ts">
+import type { TimelineItem as TimelineItemType } from './types'
+import Timeline from './Timeline.vue'
 
-const timelineData: TimelineItem[] = [
+const timelineData: TimelineItemType[] = [
   {
     text: 'Wrote my first blog post ever on Medium',
     date: 'March 03 2017',
@@ -51,11 +52,8 @@ const timelineData: TimelineItem[] = [
     },
   },
 ]
+</script>
 
-export default function Show() {
-  return (
-    <div className='h-full w-full overflow-y-auto p-4'>
-      <Timeline data={timelineData}></Timeline>
-    </div>
-  )
-}
+<template>
+  <Timeline :data="timelineData"></Timeline>
+</template>

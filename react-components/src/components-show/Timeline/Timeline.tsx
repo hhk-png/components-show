@@ -64,7 +64,7 @@ export const Timeline: React.FC<{ data: TimelineItem[] }> = ({ data }) =>
     <div
       className="flex flex-col relative my-10 
       before:content-[''] before:absolute before:left-1/2 
-      before:-translate-x-1 before:w-1 before:h-full 
+      before:-translate-x-1/2 before:w-1 before:h-full 
       before:bg-[#e17b77]"
     >
       {data.map((data, idx) => (
