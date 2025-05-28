@@ -1,4 +1,4 @@
-import Show from './components-show/Timeline'
+import Show from './components-show/VirtualTable/ForShow'
 
 function App() {
   return <Show></Show>

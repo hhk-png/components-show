@@ -14,7 +14,7 @@ const LeftMenu: React.FC<LeftMenuProps> = ({
   onSelectComponent,
 }) => {
   return (
-    <div className={`flex flex-col gap-2 shrink-0${className ? ` ${className}` : ''}`}>
+    <div className={`flex flex-col gap-2 shrink-0 pb-3 ${className ? `${className}` : ''}`}>
       {components.map(component => (
         <button
           type="button"
