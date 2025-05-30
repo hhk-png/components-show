@@ -12,4 +12,5 @@ export default [
   'Segmented',
   'Tour',
   'Timeline',
+  'VirtualTable',
 ]

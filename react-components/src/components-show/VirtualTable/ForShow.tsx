@@ -10,7 +10,7 @@ const App = () => {
         rowHeight={30}
         colWidths={Array.from({ length: 1000 }, () => 100)}
         width={500}
-        height={400}
+        height={300}
         headers={Array.from({ length: 1000 }, (_, i) => `标题 ${i}`)}
         cellRenderer={(row, col) => `(${row},${col})`}
       />
