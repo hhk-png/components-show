@@ -1,4 +1,4 @@
-import Show from './components-show/VirtualTable/ForShow'
+import Show from './components-show/VirtualTable'
 
 function App() {
   return <Show></Show>
