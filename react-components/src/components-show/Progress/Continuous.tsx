@@ -1,9 +1,5 @@
 import React from 'react'
-
-interface ContinuousProgressProps {
-  ratio: number
-  bgcolor?: string
-}
+import { ContinuousProgressProps } from './types'
 
 const ContinuousProgress: React.FC<ContinuousProgressProps> = ({
   bgcolor = '#6a1b9a',
