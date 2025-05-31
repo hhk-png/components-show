@@ -1,7 +1,7 @@
 import React from 'react'
 import { DisContinuousProps } from './types'
 
-export const DisContinuous: React.FC<DisContinuousProps> = ({
+const DisContinuous: React.FC<DisContinuousProps> = ({
   step,
   currentStep,
 }: DisContinuousProps) => {
@@ -22,3 +22,5 @@ export const DisContinuous: React.FC<DisContinuousProps> = ({
     </div>
   )
 }
+
+export default DisContinuous

@@ -1,5 +1,5 @@
 import ContinuousProgress from './Continuous'
-import { DisContinuous } from './DisContinuous'
+import DisContinuous from './DisContinuous'
 
 const Show = () => {
   return (
