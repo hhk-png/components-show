@@ -13,4 +13,5 @@ export default [
   'Tour',
   'Timeline',
   'VirtualTable',
+  'Progress',
 ]
