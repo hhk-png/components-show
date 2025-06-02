@@ -16,8 +16,8 @@ const Pagination: React.FC<PaginationProps> = ({
   }, [currentPage])
 
   return (
-    <>
-      <table className='w-full border-collapse relative'>
+    <div className='w-full flex flex-col items-center'>
+      <table className='w-full border-collapse'>
         <thead>
           <tr>
             {colNames?.map((name, idx) => {
@@ -49,13 +49,12 @@ const Pagination: React.FC<PaginationProps> = ({
         </tbody>
       </table>
       <PaginationLogic
-        className='w-full flex justify-center'
         currentPage={currentPage}
         totalCount={data.length}
         pageSize={pageSize}
         onPageChange={(page) => setCurrentPage(page)}
       />
-    </>
+    </div>
   )
 }
 

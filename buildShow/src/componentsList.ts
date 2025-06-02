@@ -14,4 +14,5 @@ export default [
   'Timeline',
   'VirtualTable',
   'Progress',
+  'Pagination',
 ]
