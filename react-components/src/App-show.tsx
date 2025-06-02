@@ -1,4 +1,4 @@
-import Show from './components-show/Progress'
+import Show from './components-show/Pagination'
 
 function App() {
   return <Show></Show>
