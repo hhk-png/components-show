@@ -1,7 +1,3 @@
-export const isHTMLElement = (element: unknown): element is HTMLElement => {
-  return element instanceof HTMLElement
-}
-
 export const getScrollContainer = (element: HTMLElement, isVertical = true): HTMLElement | Window => {
   let parent: HTMLElement | null = element
 
@@ -17,7 +13,7 @@ export const getScrollContainer = (element: HTMLElement, isVertical = true): HTM
     const overflow = window.getComputedStyle(parent)[
       isVertical ? 'overflowY' : 'overflowX'
     ]
-    
+
     if (overflow === 'scroll' || overflow === 'auto') {
       return parent
     }
@@ -28,27 +24,27 @@ export const getScrollContainer = (element: HTMLElement, isVertical = true): HTM
   return window
 }
 
-export const isInViewport = (element: HTMLElement, container: HTMLElement | Window): boolean => {
-  if (!element || !container) return false
+export const isInViewport = (target: HTMLElement, container: Window | HTMLElement) => {
+  if (!target || !container) return false
 
-  const elementRect = element.getBoundingClientRect()
-  
-  if (container === window) {
-    return (
-      elementRect.top < window.innerHeight &&
-      elementRect.bottom > 0 &&
-      elementRect.left < window.innerWidth &&
-      elementRect.right > 0
-    )
+  const elClientReact = target.getBoundingClientRect()
+  let containerClientRect: any = null
+
+  if (container !== window) {
+    containerClientRect = (container as HTMLElement).getBoundingClientRect()
+  } else {
+    containerClientRect = {
+      top: 0,
+      right: window.innerWidth,
+      bottom: window.innerHeight,
+      left: 0,
+    }
   }
 
-  if (!isHTMLElement(container)) return false
-
-  const containerRect = container.getBoundingClientRect()
   return (
-    elementRect.top < containerRect.bottom &&
-    elementRect.bottom > containerRect.top &&
-    elementRect.left < containerRect.right &&
-    elementRect.right > containerRect.left
+    elClientReact.top < containerClientRect.bottom &&
+    elClientReact.bottom > containerClientRect.top &&
+    elClientReact.right > containerClientRect.left &&
+    elClientReact.left < containerClientRect.right
   )
 }

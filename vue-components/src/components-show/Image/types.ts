@@ -4,7 +4,7 @@ export interface ImageProps {
   src: string
   fit?: ImageFit
   lazy?: boolean
-  scrollContainer?: HTMLElement | string
+  scrollContainer?: string
 }
 
 export interface ImageEmits {

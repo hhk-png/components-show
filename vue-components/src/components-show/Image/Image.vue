@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import type { ImageProps, ImageEmits, ImageSlots } from './types'
-import { getScrollContainer, isHTMLElement, isInViewport } from './lazyLoad';
+import { getScrollContainer, isInViewport } from './lazyLoad'
 
 const props = withDefaults(defineProps<ImageProps>(), {
   fit: 'fill',
-  lazy: false
+  lazy: false,
 })
 const emit = defineEmits<ImageEmits>()
 defineSlots<ImageSlots>()
@@ -14,15 +14,10 @@ const container = ref<HTMLDivElement | null>(null)
 const isLoading = ref(true)
 const hasError = ref(false)
 
-let scrollContainer: HTMLElement | Window | null = null
-let scrollListener: (() => void) | null = null
-
+/**
+ * image load
+ */
 const loadImage = () => {
-  if (!props.src) {
-    handleError(new Event('Empty src'))
-    return
-  }
-
   isLoading.value = true
   hasError.value = false
 
@@ -41,47 +36,47 @@ const handleLoad = (event: Event) => {
 const handleError = (event: Event | string) => {
   isLoading.value = false
   hasError.value = true
-  emit('error', typeof event === 'string' ? new Event(event) : event)
+  emit('error', typeof event === 'string' ? new ErrorEvent(event) : event)
 }
 
-const checkInViewport = () => {
-  if (!container.value || !scrollContainer) return false
-  return isInViewport(container.value, scrollContainer)
-}
-
+/**
+ * lazy load
+ */
+let outerScrollContainerRef: HTMLElement | Window | null = null
+let outerScrollHandleRef: (() => void) | null = null
 const setupLazyLoad = () => {
-  if (!props.lazy || !container.value) return
-  
-  // Resolve scroll container
-  if (typeof props.scrollContainer === 'string') {
-    scrollContainer = document.querySelector(props.scrollContainer) as HTMLElement | null
-  } else if (isHTMLElement(props.scrollContainer)) {
-    scrollContainer = props.scrollContainer
+  let scrollContainer: HTMLElement | Window | null
+
+  if (
+    typeof props.scrollContainer === 'string' &&
+    props.scrollContainer !== ''
+  ) {
+    scrollContainer = document.querySelector(
+      props.scrollContainer
+    ) as HTMLElement | null
   } else {
-    scrollContainer = getScrollContainer(container.value)
+    scrollContainer = getScrollContainer(container.value!)
   }
 
   if (!scrollContainer) return
 
   const lazyLoadHandler = () => {
-    if (checkInViewport()) {
+    if (isInViewport(container.value!, scrollContainer)) {
       loadImage()
-      removeLazyLoadListener()
+      scrollContainer.removeEventListener('scroll', lazyLoadHandler)
     }
   }
+  outerScrollHandleRef = lazyLoadHandler
+  outerScrollContainerRef = scrollContainer
 
-  scrollListener = lazyLoadHandler
-  scrollContainer.addEventListener('scroll', scrollListener)
-  lazyLoadHandler() // Initial check
+  scrollContainer.addEventListener('scroll', lazyLoadHandler)
+  lazyLoadHandler()
 }
 
-const removeLazyLoadListener = () => {
-  if (scrollContainer && scrollListener) {
-    scrollContainer.removeEventListener('scroll', scrollListener)
-  }
-  scrollContainer = null
-  scrollListener = null
-}
+onBeforeUnmount(() => {
+  if (!outerScrollContainerRef || !outerScrollHandleRef) return
+  outerScrollContainerRef.removeEventListener('scroll', outerScrollHandleRef)
+})
 
 // Watch for src changes
 watch(() => props.src, loadImage)
@@ -94,19 +89,13 @@ onMounted(() => {
     nextTick(setupLazyLoad)
   }
 })
-
-onBeforeUnmount(() => {
-  if (props.lazy) {
-    removeLazyLoadListener()
-  }
-})
 </script>
 
 <template>
   <div ref="container" class="relative w-full h-full">
     <!-- Loading state -->
-    <div 
-      v-if="isLoading" 
+    <div
+      v-if="isLoading"
       class="h-full w-full flex items-center justify-center bg-gray-100 text-gray-500 text-sm"
     >
       <slot name="placeholder" :isLoading="isLoading">
@@ -115,8 +104,8 @@ onBeforeUnmount(() => {
     </div>
 
     <!-- Error state -->
-    <div 
-      v-else-if="hasError" 
+    <div
+      v-else-if="hasError"
       class="h-full w-full flex items-center justify-center bg-gray-100 text-gray-500 text-sm"
     >
       <slot name="error" :error="hasError">
@@ -135,7 +124,7 @@ onBeforeUnmount(() => {
         'object-cover': fit === 'cover',
         'object-fill': fit === 'fill',
         'object-none': fit === 'none',
-        'object-scale-down': fit === 'scale-down'
+        'object-scale-down': fit === 'scale-down',
       }"
       alt=""
     />
