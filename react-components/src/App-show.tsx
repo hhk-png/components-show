@@ -1,4 +1,4 @@
-import Show from './components-show/Image'
+import Show from './components-show/Carousel/ForShow'
 
 function App() {
   return <Show></Show>
