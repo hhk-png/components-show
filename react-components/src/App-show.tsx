@@ -1,4 +1,4 @@
-import Show from './components-show/Pagination'
+import Show from './components-show/Image'
 
 function App() {
   return <Show></Show>
