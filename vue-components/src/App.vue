@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Show from './components-show/Carousel/ForShow.vue'
+import Show from './components-show//Slider/ForShow.vue'
 </script>
 
 <template>
