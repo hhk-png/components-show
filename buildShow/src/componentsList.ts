@@ -17,4 +17,5 @@ export default [
   'Pagination',
   'Image',
   'Carousel',
+  'Slider',
 ]

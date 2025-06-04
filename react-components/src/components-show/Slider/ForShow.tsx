@@ -5,7 +5,7 @@ const Show: React.FC = () => {
   const [volume, setVolume] = useState(50)
 
   return (
-    <div className='max-w-lg mx-auto mt-10'>
+    <div className='w-full mx-auto mt-10'>
       <Slider
         value={volume}
         onChange={setVolume}
