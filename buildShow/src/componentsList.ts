@@ -18,4 +18,5 @@ export default [
   'Image',
   'Carousel',
   'Slider',
+  'Calendar',
 ]
