@@ -32,16 +32,9 @@
 
 <script setup lang="ts">
 import { ref, computed, onBeforeUnmount, defineProps, defineEmits } from 'vue'
+import type { SliderProps } from './types'
 
-interface Props {
-  modelValue: number
-  min?: number
-  max?: number
-  step?: number
-  label?: string
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<SliderProps>(), {
   min: 0,
   max: 100,
   step: 1,
