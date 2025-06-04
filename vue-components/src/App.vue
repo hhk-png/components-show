@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Show from './components-show/Calendar'
+import Show from './components-show/Transfer'
 </script>
 
 <template>
