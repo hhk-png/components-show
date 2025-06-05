@@ -1,4 +1,4 @@
-import Show from './components-show/Rate'
+import Show from './components-show/Watermark'
 
 function App() {
   return <Show></Show>

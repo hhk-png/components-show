@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Show from './components-show/Rate'
+import Show from './components-show/Watermark'
 </script>
 
 <template>

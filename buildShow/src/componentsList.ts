@@ -21,4 +21,5 @@ export default [
   'Calendar',
   'Transfer',
   'Rate',
+  'Watermark',
 ]
