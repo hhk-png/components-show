@@ -1,4 +1,4 @@
-import Show from './components-show/Scrollbar'
+import Show from './components-show/ColorPicker/ForShow'
 
 function App() {
   return <Show></Show>
