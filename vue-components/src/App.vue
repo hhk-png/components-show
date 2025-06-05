@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Show from './components-show/Watermark'
+import Show from './components-show/ScrollBar'
 </script>
 
 <template>
