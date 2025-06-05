@@ -20,4 +20,5 @@ export default [
   'Slider',
   'Calendar',
   'Transfer',
+  'Rate',
 ]
