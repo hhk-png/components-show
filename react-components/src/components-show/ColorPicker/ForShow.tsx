@@ -8,5 +8,9 @@ export default function App() {
     setColor(color)
   }, [])
 
-  return <FreePicker color={color} onChange={handleChange} />
+  return (
+    <div className='h-full overflow-y-auto overflow-x-hidden'>
+      <FreePicker color={color} onChange={handleChange} />
+    </div>
+  )
 }

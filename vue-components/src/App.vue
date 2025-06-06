@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Show from './components-show/ScrollBar'
+import Show from './components-show/ColorPicker'
 </script>
 
 <template>

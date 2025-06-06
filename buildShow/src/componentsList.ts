@@ -23,4 +23,5 @@ export default [
   'Rate',
   'Watermark',
   'Scrollbar',
+  'ColorPicker',
 ]
