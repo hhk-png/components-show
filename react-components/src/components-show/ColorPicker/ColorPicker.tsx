@@ -4,18 +4,20 @@ import React, {
   useCallback,
   useMemo,
 } from 'react'
-import type { ColorRGB, FreePickerProps } from './types'
+import type { ColorRGB, ColorPickerProps } from './types'
 import FreeSelector from './FreeSelector'
 import {
   clamp,
+  DEFAULT_COLORS,
   getHueCoordinates,
   getSaturationCoordinates,
   hsvToRgb,
   parseColor,
   rgbToHex,
 } from './utils'
+import PredefinedSelector from './PredefinedSelector'
 
-const FreePicker: React.FC<FreePickerProps> = ({ color, onChange }) => {
+const ColorPicker: React.FC<ColorPickerProps> = ({ color, onChange }) => {
   const parsedColor = useMemo(() => parseColor(color), [color])
 
   const satCoords = useMemo(
@@ -92,7 +94,14 @@ const FreePicker: React.FC<FreePickerProps> = ({ color, onChange }) => {
   )
 
   return (
-    <div className='p-3 overflow-auto w-fit scrollbar-hide'>
+    <div className='p-3 w-fit'>
+      <PredefinedSelector
+        colors={DEFAULT_COLORS}
+        parsedColor={parsedColor}
+        onSelect={onChange}
+        className='mb-1'
+      />
+
       <FreeSelector
         parsedColor={parsedColor}
         satCoords={satCoords}
@@ -102,22 +111,22 @@ const FreePicker: React.FC<FreePickerProps> = ({ color, onChange }) => {
       />
 
       {/* 输入区域 */}
-      <div className='flex flex-row justify-between m-[2px]'>
+      <div className='flex justify-between m-1'>
         {/* Hex 部分 */}
-        <div className='grid grid-cols-[auto_auto_auto] gap-2 items-center'>
+        <div className='grid grid-cols-[1fr_3fr] gap-2 items-center'>
           <div
-            className='w-[25px] h-[25px] rounded-full shadow-[0px_1px_3px_rgba(0,0,0,0.2),0px_1px_1px_rgba(0,0,0,0.14),0px_2px_1px_-1px_rgba(0,0,0,0.12)]'
+            className='w-7 h-7 rounded-full shadow-lg'
             style={{
               background: color,
             }}
           />
           <div>
-            <label htmlFor='cp-input-hex' className='text-[12px] block'>
-              Hex
+            <label htmlFor='cp-input-hex' className='text-md block'>
+              Hex:
             </label>
             <input
               id='cp-input-hex'
-              className='w-[60px] p-[4px_6px] block'
+              className='w-[75px] p-1 block'
               placeholder='Hex'
               value={parsedColor?.hex}
               onChange={handleHexChange}
@@ -126,53 +135,38 @@ const FreePicker: React.FC<FreePickerProps> = ({ color, onChange }) => {
         </div>
 
         {/* RGB 部分 */}
-        <div className='grid grid-cols-[auto_auto_auto] gap-2 items-center'>
-          <div>
-            <label htmlFor='cp-input-r' className='text-[12px] block'>
-              R
-            </label>
-            <input
-              id='cp-input-r'
-              className='w-[30px] p-[4px_6px] block'
-              placeholder='R'
-              value={parsedColor.rgb.r}
-              onChange={(event) => handleRgbChange('r', Number(event.target.value))}
-              inputMode='numeric'
-              pattern='[0-9]*'
-            />
-          </div>
-          <div>
-            <label htmlFor='cp-input-g' className='text-[12px] block'>
-              G
-            </label>
-            <input
-              id='cp-input-g'
-              className='w-[30px] p-[4px_6px] block'
-              placeholder='G'
-              value={parsedColor.rgb.g}
-              onChange={(event) => handleRgbChange('g', Number(event.target.value))}
-              inputMode='numeric'
-              pattern='[0-9]*'
-            />
-          </div>
-          <div>
-            <label htmlFor='cp-input-b' className='text-[12px] block'>
-              B
-            </label>
-            <input
-              id='cp-input-b'
-              className='w-[30px] p-[4px_6px] block'
-              placeholder='B'
-              value={parsedColor.rgb.b}
-              onChange={(event) => handleRgbChange('b', Number(event.target.value))}
-              inputMode='numeric'
-              pattern='[0-9]*'
-            />
-          </div>
+        <div className='grid grid-cols-3 gap-2 items-center'>
+          {['r', 'g', 'b'].map((color) => {
+            const value = parsedColor.rgb[color as keyof ColorRGB]
+            return (
+              <div key={color}>
+                <label
+                  htmlFor={`cp-input-${color}`}
+                  className='text-[12px] block'
+                >
+                  {color.toUpperCase()}:
+                </label>
+                <input
+                  id={`cp-input-${color}`}
+                  className='w-9 p-1 block'
+                  placeholder={color.toUpperCase()}
+                  value={value}
+                  onChange={(event) =>
+                    handleRgbChange(
+                      color as keyof ColorRGB,
+                      Number(event.target.value)
+                    )
+                  }
+                  inputMode='numeric'
+                  pattern='[0-9]*'
+                />
+              </div>
+            )
+          })}
         </div>
       </div>
     </div>
   )
 }
 
-export default FreePicker
+export default ColorPicker

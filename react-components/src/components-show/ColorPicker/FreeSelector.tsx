@@ -7,9 +7,10 @@ const FreeSelector: React.FC<FreeSelectorProps> = ({
   hueCoords,
   onSaturationChange,
   onHueChange,
+  className = '',
 }) => {
   return (
-    <div className='grid gap-2 mb-4 w-full max-w-[400px]'>
+    <div className={`grid gap-2 mb-4 w-[400px] ${className}`}>
       {/* 饱和度面板 */}
       <div
         className='w-full h-[150px] relative cursor-crosshair rounded bg-[linear-gradient(transparent,black),linear-gradient(to_right,white,transparent)]'

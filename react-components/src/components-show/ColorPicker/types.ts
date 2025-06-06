@@ -19,12 +19,14 @@ export interface ColorHSV {
 }
 
 export interface PredefinedSelectorProps {
+  className?: string
   parsedColor: Color
   colors: string[]
   onSelect(color: string): void
 }
 
 export interface FreeSelectorProps {
+  className?: string
   parsedColor: Color; // we'll need to convert this to HSV
   satCoords: number[] // [x, y] coordinates for saturation map
   hueCoords: number // x coordinates for hue map
@@ -32,11 +34,7 @@ export interface FreeSelectorProps {
   onHueChange: MouseEventHandler
 }
 
-export interface FreePickerProps {
+export interface ColorPickerProps {
   color: string
   onChange(color: string): void
-}
-
-export type PredefinedPickerProps = FreePickerProps & {
-  colors?: string[]
 }

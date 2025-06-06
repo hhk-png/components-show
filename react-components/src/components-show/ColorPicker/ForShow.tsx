@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react'
-import FreePicker from './FreePicker'
-import PredefinedPicker from './PredefinedPicker'
+import FreePicker from './ColorPicker'
 
 export default function App() {
   const [color, setColor] = useState('#ffffff')
@@ -9,11 +8,5 @@ export default function App() {
     setColor(color)
   }, [])
 
-  return (
-    <>
-      <FreePicker color={color} onChange={handleChange} />
-      <div>a</div>
-      <PredefinedPicker color={color} onChange={handleChange}></PredefinedPicker>
-    </>
-  )
+  return <FreePicker color={color} onChange={handleChange} />
 }
