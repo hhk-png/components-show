@@ -32,7 +32,7 @@ async function getFileTree(dirPath: string, res: FileTree) {
       // code highlight
       const html = await codeToHtml(fileContent, {
         lang: trimFirstDot(ext),
-        theme: 'vitesse-dark'
+        theme: 'github-dark'
       })
       const replaced = html.replace(/<pre[^>]*>/g, '<pre>')
 
