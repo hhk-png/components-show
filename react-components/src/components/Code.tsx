@@ -92,7 +92,8 @@ const Code: React.FC<CodeProps> = ({ code, className }) => {
         return (
           <div
             key={item.path}
-            className='cursor-pointer hover:bg-gray-600 p-1 text-gray-200 rounded font-mono'
+            title={item.name}
+            className='cursor-pointer hover:bg-gray-600 p-1 text-gray-200 rounded font-mono truncate'
             onClick={() => handleFileClick(item as CompFile)}
           >
             {FileIcon((item as CompFile).ext)}
